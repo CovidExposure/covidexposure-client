@@ -65,7 +65,7 @@ const useStyles = createStyles(theme => ({
   },
 }));
 
-export default function ReportExposureModal({ openModal, setOpenModal }) {
+export default function NewLocationModal({ openModal, setOpenModal }) {
   let [addressLine1, setAddressLine1] = useState('');
   let [addressLine2, setAddressLine2] = useState('');
   let [city, setCity] = useState('');
@@ -78,7 +78,7 @@ export default function ReportExposureModal({ openModal, setOpenModal }) {
     <Modal
       opened={openModal}
       onClose={() => setOpenModal(false)}
-      title="Report Exposure"
+      title="Generate QR Code"
     >
       <form className={classes.form}>
         <TextInput

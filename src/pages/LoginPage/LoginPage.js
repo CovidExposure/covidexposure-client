@@ -19,7 +19,7 @@ const useStyles = createStyles((theme, params, getRef) => ({
   form: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '36px',
+    gap: '16px',
     justifyContent: 'center',
   },
   inputFields: {

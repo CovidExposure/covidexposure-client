@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react';
 
 import Header from '../../components/Header/Header';
+import NewLocationModal from '../../components/NewLocationModal/NewLocationModal';
 import ReportExposureModal from '../../components/ReportExposureModal/ReportExposureModal';
 
 const useStyles = createStyles(theme => ({
@@ -20,6 +21,11 @@ const useStyles = createStyles(theme => ({
       marginRight: 15,
     },
   },
+  description: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '14px',
+  },
   headerContainer: {
     alignItems: 'flex-start',
     display: 'flex',
@@ -27,17 +33,18 @@ const useStyles = createStyles(theme => ({
     gap: '36px',
     justifyContent: 'space-between',
   },
-  description: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '14px',
+  locationModalLink: {
+    color: 'orange',
+    cursor: 'pointer',
+    textDecoration: 'underline',
   },
 }));
 
 export default function DashboardPage() {
   let { loggedIn } = useSelector(state => state.userData);
   let { classes } = useStyles();
-  let [openModal, setOpenModal] = useState(false);
+  let [openExposureModal, setOpenExposureModal] = useState(false);
+  let [openLocationModal, setOpenLocationModal] = useState(false);
 
   if (loggedIn === false) {
     return <Navigate to="/login" />;
@@ -48,14 +55,15 @@ export default function DashboardPage() {
         <Container className={classes.headerContainer}>
           <div className={classes.description}>
             <Title order={1}>Exposure History</Title>
-            <Text size="md">If there is no QR code to scan, please generate one and print it.</Text>
+            <Text size="md">If there is no QR code to scan, please <span className={classes.locationModalLink} onClick={() => setOpenLocationModal(true)}>generate</span> one and print it.</Text>
           </div>
-          <Button leftIcon={<Plus size={18} />} onClick={() => setOpenModal(true)}>Report Exposure</Button>
+          <Button leftIcon={<Plus size={18} />} onClick={() => setOpenExposureModal(true)}>Report Exposure</Button>
         </Container>
         <main>
           
         </main>
-        <ReportExposureModal openModal={openModal} setOpenModal={setOpenModal} />
+        <NewLocationModal openModal={openLocationModal} setOpenModal={setOpenLocationModal} />
+        <ReportExposureModal openModal={openExposureModal} setOpenModal={setOpenExposureModal} />
       </>
     );
   }
