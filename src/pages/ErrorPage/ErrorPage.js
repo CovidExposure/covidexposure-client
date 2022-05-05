@@ -1,4 +1,5 @@
 import { Button, Container, createStyles, Text, Title } from '@mantine/core';
+import { Home } from 'tabler-icons-react';
 import { Link } from 'react-router-dom';
 
 const useStyles = createStyles((theme, params, getRef) => ({
@@ -26,7 +27,7 @@ export default function ErrorPage() {
         <Title order={1}>Error</Title>
         <Text size="md">Apologies, the page you're looking for cannot be found.</Text>
       </div>
-      <Button component={Link} to="/">Home</Button>
+      <Button leftIcon={<Home size={18} />} component={Link} to="/">Home</Button>
     </Container>
   );
 }
