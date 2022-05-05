@@ -9,6 +9,7 @@ const useStyles = createStyles((theme, params, getRef) => ({
     gap: '4rem',
     height: '100vh',
     justifyContent: 'center',
+    padding: '0 36px',
   },
   message: {
     display: 'flex',
@@ -25,10 +26,7 @@ export default function ErrorPage() {
         <Title order={1}>Error</Title>
         <Text size="md">Apologies, the page you're looking for cannot be found.</Text>
       </div>
-
-      <Link to="/">
-        <Button>Home</Button>
-      </Link>
+      <Button component={Link} to="/">Home</Button>
     </Container>
   );
 }

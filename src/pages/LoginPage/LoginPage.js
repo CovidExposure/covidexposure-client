@@ -39,7 +39,7 @@ export default function LoginPage() {
   let { classes } = useStyles();
 
   if (loggedIn) {
-    return <Navigate to="/dashboard" />;
+    return <Navigate to="/" />;
   } else {
     return (
       <Container className={classes.container} size="xs">
