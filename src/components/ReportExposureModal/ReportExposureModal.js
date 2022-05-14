@@ -1,4 +1,5 @@
 import { Button, Checkbox, createStyles, Group, Modal } from '@mantine/core';
+import { Check } from 'tabler-icons-react';
 import { DatePicker, TimeInput } from '@mantine/dates';
 import { showNotification } from '@mantine/notifications';
 import { useState } from 'react';
@@ -41,7 +42,14 @@ export default function ReportExposureModal({ openModal, setOpenModal }) {
       method: 'POST',
     })
       .then(response => {
-        if (response.status === 200) {
+        if (response.ok) {
+          showNotification({
+            autoClose: 3000,
+            color: 'blue',
+            icon: <Check />,
+            message: 'Your Test Result is Submitted.',
+            title: 'Success',
+          });
         } else {
           throw new Error();
         }
