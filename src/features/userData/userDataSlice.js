@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const userInfo = localStorage.getItem('userInfo');
+
 const initialState = {
-  loggedIn: true,
-  email: '',
-  password: ''
+  loggedIn: userInfo ?? false,
+  email: (userInfo === null) ? '' : JSON.parse(userInfo).email,
+  password: (userInfo === null) ? '' : JSON.parse(userInfo).password,
 };
 
 export const userDataSlice = createSlice({
@@ -22,6 +24,6 @@ export const userDataSlice = createSlice({
   },
 });
 
-export const { setEmail, setPassword, setLoggedIn } = userDataSlice.actions;
+export const { setEmail, setLoggedIn, setPassword } = userDataSlice.actions;
 
 export default userDataSlice.reducer;

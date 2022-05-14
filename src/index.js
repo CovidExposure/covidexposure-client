@@ -8,6 +8,8 @@ import App from './App';
 const container = document.getElementById('root');
 const root = createRoot(container);
 
+window.COVID_EXPOSURE_SERVICE_ENDPOINT = (process.env.NODE_ENV === 'production') ? '' : 'http://localhost:5000';
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>

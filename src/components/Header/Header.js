@@ -1,6 +1,7 @@
 import { ActionIcon, Burger, createStyles, Container, Header as MantineHeader, Group } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import { Logout, Qrcode } from 'tabler-icons-react';
+import { showNotification } from '@mantine/notifications';
 import { useBooleanToggle } from '@mantine/hooks';
 import { useDispatch } from 'react-redux'
 
@@ -59,10 +60,33 @@ export default function Header() {
   let { classes } = useStyles();
   let dispatch = useDispatch();
 
-  const handleLogout = () => {
-    dispatch(setEmail(''));
-    dispatch(setPassword(''));
-    dispatch(setLoggedIn(false));
+  const logOutUser = () => {
+    fetch(`${window.COVID_EXPOSURE_SERVICE_ENDPOINT}/logout`, { method: 'POST' })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          dispatch(setEmail(''));
+          dispatch(setLoggedIn(false));
+          dispatch(setPassword(''));
+          localStorage.removeItem('userInfo');
+        } else {
+          showNotification({
+            autoClose: 3000,
+            color: 'red',
+            message: 'Logout Unsuccessful. Please Try Again.',
+            title: 'Error',
+          });
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        showNotification({
+          autoClose: 3000,
+          color: 'red',
+          message: 'Unexpected Error Encountered. Please Try Again.',
+          title: 'Error',
+        });
+      });
   };
 
   return (
@@ -83,7 +107,7 @@ export default function Header() {
           <ActionIcon size="lg">
             <Qrcode size={18} />
           </ActionIcon>
-          <ActionIcon size="lg" onClick={(_) => handleLogout()}>
+          <ActionIcon size="lg" onClick={logOutUser}>
             <Logout size={18} />
           </ActionIcon>
         </Group>
