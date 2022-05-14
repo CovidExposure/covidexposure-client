@@ -37,6 +37,7 @@ export default function ReportExposureModal({ openModal, setOpenModal }) {
 
     fetch(`${window.COVID_EXPOSURE_SERVICE_ENDPOINT}/visitor/test_record`, {
       body: params,
+      credentials: 'include',
       method: 'POST',
     })
       .then(response => {

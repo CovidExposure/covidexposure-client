@@ -48,6 +48,7 @@ export default function LoginPage() {
 
     fetch(`${window.COVID_EXPOSURE_SERVICE_ENDPOINT}/login`, {
       body: params,
+      credentials: 'include',
       method: 'POST',
     })
       .then(response => response.json())

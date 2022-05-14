@@ -61,7 +61,10 @@ export default function Header() {
   let dispatch = useDispatch();
 
   const logOutUser = () => {
-    fetch(`${window.COVID_EXPOSURE_SERVICE_ENDPOINT}/logout`, { method: 'POST' })
+    fetch(`${window.COVID_EXPOSURE_SERVICE_ENDPOINT}/logout`, {
+      credentials: 'include',
+      method: 'POST',
+    })
       .then(response => response.json())
       .then(data => {
         if (data.success) {
