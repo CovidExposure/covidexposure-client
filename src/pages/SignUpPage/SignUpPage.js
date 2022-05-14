@@ -104,7 +104,7 @@ export default function SignUpPage() {
               onChange={event => setEmail(event.currentTarget.value)}
               placeholder="Email"
               required
-              value={name}
+              value={email}
             />
             <PasswordInput
               label="Password"

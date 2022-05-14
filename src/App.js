@@ -1,3 +1,4 @@
+import 'dayjs/locale/en';
 import { MantineProvider } from '@mantine/core';
 import { NotificationsProvider } from '@mantine/notifications';
 import { Route, Routes } from "react-router-dom";
@@ -10,7 +11,14 @@ import SignUpPage from './pages/SignUpPage/SignUpPage';
 
 export default function App() {
   return (
-    <MantineProvider theme={{ colorScheme: 'dark' }} withGlobalStyles withNormalizeCSS>
+    <MantineProvider
+      theme={{
+        colorScheme: 'dark',
+        datesLocale: 'en'
+      }}
+      withGlobalStyles
+      withNormalizeCSS
+    >
       <NotificationsProvider limit={3}>
         <Routes>
           <Route path="/" element={<DashboardPage />} />

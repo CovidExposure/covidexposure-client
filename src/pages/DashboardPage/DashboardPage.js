@@ -1,4 +1,4 @@
-import { Button, Container, createStyles, Modal, Title, Text, TextInput } from '@mantine/core';
+import { Button, Container, createStyles, Modal, Title, Text } from '@mantine/core';
 import { Navigate } from 'react-router-dom';
 import { Plus } from 'tabler-icons-react';
 import { useSelector } from 'react-redux';
@@ -54,10 +54,10 @@ export default function DashboardPage() {
         <Header />
         <Container className={classes.headerContainer}>
           <div className={classes.description}>
-            <Title order={1}>Exposure History</Title>
+            <Title order={1}>History</Title>
             <Text size="md">If there is no QR code to scan, please <span className={classes.locationModalLink} onClick={() => setOpenLocationModal(true)}>generate</span> one and print it.</Text>
           </div>
-          <Button leftIcon={<Plus size={18} />} onClick={() => setOpenExposureModal(true)}>Report Exposure</Button>
+          <Button leftIcon={<Plus size={18} />} onClick={() => setOpenExposureModal(true)}>Test Result</Button>
         </Container>
         <main>
           
