@@ -6,3 +6,7 @@ Before moving on in this section, please install the latest LTS version of Node.
 1. Enter the `covidexposure-client` in terminal and execute `npm i`
 2. Run `npm start`
 
+## Deployment
+1. Enter the `covidexposure-client` in terminal and execute `npm i`
+2. Run `npm run build`
+3. Move the `build` folder to somewhere you want to serve static files
