@@ -1,6 +1,11 @@
 FROM node:lts
+
 COPY . /covidExposureFrontend
+
 WORKDIR /covidExposureFrontend
-RUN npm i 
+
+RUN npm ci
+
 ENTRYPOINT ["npm"]
+
 CMD ["start"]
