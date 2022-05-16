@@ -61,14 +61,14 @@ export default function SignUpPage() {
             autoClose: 3000,
             color: 'blue',
             icon: <Check />,
-            message: 'Your Account is Created.',
+            message: 'Your account is created',
             title: 'Success',
           });
         } else {
           showNotification({
             autoClose: 3000,
             color: 'red',
-            message: 'User Exists.',
+            message: 'User already exists',
             title: 'Error',
           });
         }
@@ -78,7 +78,7 @@ export default function SignUpPage() {
         showNotification({
           autoClose: 3000,
           color: 'red',
-          message: 'Unexpected Error Encountered. Please Try Again.',
+          message: 'Unexpected error encountered - please try again',
           title: 'Error',
         });
       });

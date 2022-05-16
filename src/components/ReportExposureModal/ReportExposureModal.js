@@ -47,7 +47,7 @@ export default function ReportExposureModal({ openModal, setOpenModal }) {
             autoClose: 3000,
             color: 'blue',
             icon: <Check />,
-            message: 'Your Test Result is Submitted.',
+            message: 'Your test result is submitted',
             title: 'Success',
           });
           setOpenModal(false);
@@ -60,7 +60,7 @@ export default function ReportExposureModal({ openModal, setOpenModal }) {
         showNotification({
           autoClose: 3000,
           color: 'red',
-          message: 'Unexpected Error Encountered. Please Try Again.',
+          message: 'Unexpected error encountered - please try again',
           title: 'Error',
         });
       });

@@ -60,7 +60,7 @@ export default function LoginPage() {
           showNotification({
             autoClose: 3000,
             color: 'red',
-            message: 'Invalid Email or Password.',
+            message: 'Invalid email or password',
             title: 'Error',
           });
         }
@@ -70,7 +70,7 @@ export default function LoginPage() {
         showNotification({
           autoClose: 3000,
           color: 'red',
-          message: 'Unexpected Error Encountered. Please Try Again.',
+          message: 'Unexpected error encountered - please try again',
           title: 'Error',
         });
       });

@@ -83,7 +83,7 @@ export default function Header() {
           showNotification({
             autoClose: 3000,
             color: 'red',
-            message: 'Logout Unsuccessful. Please Try Again.',
+            message: data.failure,
             title: 'Error',
           });
         }
@@ -93,7 +93,7 @@ export default function Header() {
         showNotification({
           autoClose: 3000,
           color: 'red',
-          message: 'Unexpected Error Encountered. Please Try Again.',
+          message: 'Unexpected error encountered - please try again',
           title: 'Error',
         });
       });
@@ -127,7 +127,7 @@ export default function Header() {
           autoClose: 3000,
           color: 'blue',
           icon: <Check />,
-          message: 'Your Data is Recorded.',
+          message: 'Your data is recorded',
           title: 'Success',
         });
       } else {
@@ -142,7 +142,7 @@ export default function Header() {
       showNotification({
         autoClose: 3000,
         color: 'red',
-        message: 'Unexpected Error Encountered. Please Try Again.',
+        message: 'Unexpected error encountered - please try again',
         title: 'Error',
       });
       console.error(err);

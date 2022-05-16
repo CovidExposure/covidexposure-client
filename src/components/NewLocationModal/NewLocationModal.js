@@ -93,12 +93,17 @@ export default function NewLocationModal({ openModal, setOpenModal }) {
             autoClose: 3000,
             color: 'blue',
             icon: <Check />,
-            message: 'Please Save the QR Code in the New Tab.',
+            message: 'Please save the QR code in the new tab',
             title: 'Success',
           });
           window.open(`http://api.qrserver.com/v1/create-qr-code/?data=${window.COVID_EXPOSURE_SERVICE_ENDPOINT}${data.content}&size=800x800`, "_blank");
         } else {
-          throw new Error();
+          showNotification({
+            autoClose: 3000,
+            color: 'red',
+            message: data.failure,
+            title: 'Error',
+          });
         }
       })
       .catch(error => {
@@ -106,7 +111,7 @@ export default function NewLocationModal({ openModal, setOpenModal }) {
         showNotification({
           autoClose: 3000,
           color: 'red',
-          message: 'Unexpected Error Encountered. Please Try Again.',
+          message: 'Unexpected error encountered - please try again',
           title: 'Error',
         });
       });

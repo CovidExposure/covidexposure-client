@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react';
 
 import Header from '../../components/Header/Header';
+import HistoryList from '../../components/HistoryList/HistoryList';
 import NewLocationModal from '../../components/NewLocationModal/NewLocationModal';
 import ReportExposureModal from '../../components/ReportExposureModal/ReportExposureModal';
 
@@ -32,6 +33,14 @@ const useStyles = createStyles(theme => ({
     flexWrap: 'wrap',
     gap: '36px',
     justifyContent: 'space-between',
+  },
+  historyContainer: {
+    alignItems: 'flex-start',
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '36px',
+    justifyContent: 'space-between',
+    marginTop: '96px',
   },
   locationModalLink: {
     color: 'orange',
@@ -61,8 +70,9 @@ export default function DashboardPage() {
           <Button leftIcon={<Plus size={18} />} onClick={() => setOpenExposureModal(true)}>Test Result</Button>
         </Container>
 
-        <main>
-        </main>
+        <Container className={classes.historyContainer}>
+          <HistoryList />
+        </Container>
 
         <NewLocationModal openModal={openLocationModal} setOpenModal={setOpenLocationModal} />
         <ReportExposureModal openModal={openExposureModal} setOpenModal={setOpenExposureModal} />
