@@ -79,7 +79,15 @@ export default function NewLocationModal({ openModal, setOpenModal }) {
   let { classes } = useStyles();
 
   const submitNewLocation = () => {
-    let params = new URLSearchParams();
+    let params = new FormData();
+    params.append('name', name);
+    params.append('address1', addressLine1);
+    params.append('address2', addressLine2);
+    params.append('city', city);
+    params.append('state', state);
+    params.append('zipcode', zipCode);
+    params.append('category', category);
+    params.append('country', 'United States');
 
     fetch(`${window.COVID_EXPOSURE_SERVICE_ENDPOINT}/business`, {
       body: params,
@@ -90,13 +98,13 @@ export default function NewLocationModal({ openModal, setOpenModal }) {
       .then(data => {
         if (data.success) {
           showNotification({
-            autoClose: 3000,
+            autoClose: false,
             color: 'blue',
             icon: <Check />,
             message: 'Please save the QR code in the new tab',
             title: 'Success',
           });
-          window.open(`http://api.qrserver.com/v1/create-qr-code/?data=${window.COVID_EXPOSURE_SERVICE_ENDPOINT}${data.content}&size=800x800`, "_blank");
+          window.open(`http://api.qrserver.com/v1/create-qr-code/?data=${data.content}&size=800x800`, "_blank");
         } else {
           showNotification({
             autoClose: 3000,

@@ -103,7 +103,7 @@ export default function Header() {
     let formData = new FormData();
     formData.append('file', fileInputRef.files[0]);
 
-    let qrCodeResponse = await fetch(`${window.COVID_EXPOSURE_SERVICE_ENDPOINT}/business/decodeqr`, {
+    let qrCodeResponse = await fetch(`${window.COVID_EXPOSURE_SERVICE_ENDPOINT}/business/qr-code`, {
       body: formData,
       credentials: 'include',
       method: 'POST'
