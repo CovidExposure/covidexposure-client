@@ -4,7 +4,7 @@ import { DatePicker, TimeInput } from '@mantine/dates';
 import { showNotification } from '@mantine/notifications';
 import { useState } from 'react';
 
-const useStyles = createStyles(theme => ({
+const useStyles = createStyles(_ => ({
   controls: {
     marginTop: '5px',
   },
@@ -50,6 +50,7 @@ export default function ReportExposureModal({ openModal, setOpenModal }) {
             message: 'Your Test Result is Submitted.',
             title: 'Success',
           });
+          setOpenModal(false);
         } else {
           throw new Error();
         }

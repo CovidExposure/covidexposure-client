@@ -52,6 +52,7 @@ export default function DashboardPage() {
     return (
       <>
         <Header />
+
         <Container className={classes.headerContainer}>
           <div className={classes.description}>
             <Title order={1}>History</Title>
@@ -59,9 +60,10 @@ export default function DashboardPage() {
           </div>
           <Button leftIcon={<Plus size={18} />} onClick={() => setOpenExposureModal(true)}>Test Result</Button>
         </Container>
+
         <main>
-          
         </main>
+
         <NewLocationModal openModal={openLocationModal} setOpenModal={setOpenLocationModal} />
         <ReportExposureModal openModal={openExposureModal} setOpenModal={setOpenExposureModal} />
       </>

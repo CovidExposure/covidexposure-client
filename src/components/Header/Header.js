@@ -1,9 +1,11 @@
 import { ActionIcon, Burger, createStyles, Container, Header as MantineHeader, Group } from '@mantine/core';
+import { Check } from 'tabler-icons-react';
 import { Link } from 'react-router-dom';
 import { Logout, Qrcode } from 'tabler-icons-react';
 import { showNotification } from '@mantine/notifications';
 import { useBooleanToggle } from '@mantine/hooks';
 import { useDispatch } from 'react-redux'
+import { useRef } from 'react';
 
 import logo from '../../assets/images/logo.png';
 import { setEmail, setPassword, setLoggedIn } from '../../features/userData/userDataSlice';
@@ -18,6 +20,9 @@ const useStyles = createStyles(theme => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  hidden: {
+    display: 'none'
   },
   links: {
     [theme.fn.smallerThan('sm')]: {
@@ -59,6 +64,8 @@ export default function Header() {
   let [opened, toggleOpened] = useBooleanToggle(false);
   let { classes } = useStyles();
   let dispatch = useDispatch();
+  let fileInputRef = useRef(null);
+  let submitButtonRef = useRef(null);
 
   const logOutUser = () => {
     fetch(`${window.COVID_EXPOSURE_SERVICE_ENDPOINT}/logout`, {
@@ -92,6 +99,56 @@ export default function Header() {
       });
   };
 
+  const getCheckInEndpoint = async () => {
+    let formData = new FormData();
+    formData.append('file', fileInputRef.files[0]);
+
+    let qrCodeResponse = await fetch(`${window.COVID_EXPOSURE_SERVICE_ENDPOINT}/business/decodeqr`, {
+      body: formData,
+      credentials: 'include',
+      method: 'POST'
+    });
+    let qrCodeData = await qrCodeResponse.json();
+    return qrCodeData.content;
+  };
+
+  const checkIn = async (event) => {
+    try {
+      event.preventDefault();
+      let endpoint = await getCheckInEndpoint();
+      let checkInResponse = await fetch(`${window.COVID_EXPOSURE_SERVICE_ENDPOINT}${endpoint}`, {
+        credentials: 'include',
+        method: 'POST'
+      });
+      let checkInData = await checkInResponse.json();
+
+      if (checkInData.success) {
+        showNotification({
+          autoClose: 3000,
+          color: 'blue',
+          icon: <Check />,
+          message: 'Your Data is Recorded.',
+          title: 'Success',
+        });
+      } else {
+        showNotification({
+          autoClose: 3000,
+          color: 'red',
+          message: checkInData.failure,
+          title: 'Error',
+        });
+      }
+    } catch (err) {
+      showNotification({
+        autoClose: 3000,
+        color: 'red',
+        message: 'Unexpected Error Encountered. Please Try Again.',
+        title: 'Error',
+      });
+      console.error(err);
+    }
+  };
+
   return (
     <MantineHeader height={56} mb={120}>
       <Container className={classes.inner}>
@@ -107,13 +164,30 @@ export default function Header() {
         </Link>
 
         <Group spacing={0} className={classes.social} position="right" noWrap>
-          <ActionIcon size="lg">
+          <ActionIcon
+            size="lg"
+            onClick={() => fileInputRef.click()}
+          >
             <Qrcode size={18} />
           </ActionIcon>
           <ActionIcon size="lg" onClick={logOutUser}>
             <Logout size={18} />
           </ActionIcon>
         </Group>
+
+        <form
+          className={classes.hidden}
+          onSubmit={async (event) => await checkIn(event)}
+        >
+          <input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
+          <input
+            name="file"
+            onChange={() => submitButtonRef.click()}
+            ref={fileInput => fileInputRef = fileInput}
+            type="file"
+          />
+          <input ref={submitInput => submitButtonRef = submitInput} type="submit" value="Submit" />
+        </form>
       </Container>
     </MantineHeader>
   );

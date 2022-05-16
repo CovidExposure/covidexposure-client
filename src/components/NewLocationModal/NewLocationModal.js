@@ -1,4 +1,6 @@
 import { Button, createStyles, Group, Modal, NativeSelect, TextInput } from '@mantine/core';
+import { Check } from 'tabler-icons-react';
+import { showNotification } from '@mantine/notifications';
 import { useState } from 'react';
 
 const STATES = [
@@ -71,8 +73,44 @@ export default function NewLocationModal({ openModal, setOpenModal }) {
   let [city, setCity] = useState('');
   let [state, setState] = useState('');
   let [zipCode, setZipCode] = useState('');
+  let [name, setName] = useState('');
+  let [category, setCategory] = useState('');
 
   let { classes } = useStyles();
+
+  const submitNewLocation = () => {
+    let params = new URLSearchParams();
+
+    fetch(`${window.COVID_EXPOSURE_SERVICE_ENDPOINT}/business`, {
+      body: params,
+      credentials: 'include',
+      method: 'POST',
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          showNotification({
+            autoClose: 3000,
+            color: 'blue',
+            icon: <Check />,
+            message: 'Please Save the QR Code in the New Tab.',
+            title: 'Success',
+          });
+          window.open(`http://api.qrserver.com/v1/create-qr-code/?data=${window.COVID_EXPOSURE_SERVICE_ENDPOINT}${data.content}&size=800x800`, "_blank");
+        } else {
+          throw new Error();
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        showNotification({
+          autoClose: 3000,
+          color: 'red',
+          message: 'Unexpected Error Encountered. Please Try Again.',
+          title: 'Error',
+        });
+      });
+  };
 
   return (
     <Modal
@@ -81,6 +119,13 @@ export default function NewLocationModal({ openModal, setOpenModal }) {
       title="Generate QR Code"
     >
       <form className={classes.form}>
+        <TextInput
+          label="Name"
+          onChange={event => setName(event.currentTarget.value)}
+          placeholder="Name"
+          required
+          value={name}
+        />
         <TextInput
           label="Address Line 1"
           onChange={event => setAddressLine1(event.currentTarget.value)}
@@ -115,9 +160,16 @@ export default function NewLocationModal({ openModal, setOpenModal }) {
           required
           value={zipCode}
         />
+        <TextInput
+          label="Category"
+          onChange={event => setCategory(event.currentTarget.value)}
+          placeholder="Category"
+          required
+          value={category}
+        />
 
         <Group className={classes.controls} position="right">
-          <Button variant="light">Submit</Button>
+          <Button onClick={submitNewLocation} variant="light">Submit</Button>
         </Group>
       </form>
     </Modal>
