@@ -1,14 +1,14 @@
-import { Container, createStyles, Title, Text } from '@mantine/core';
+import { createStyles, Table, Title, Text } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { showNotification } from '@mantine/notifications';
 
 const useStyles = createStyles(_ => ({
-  emptyHistoryContainer: {
-    textAlign: 'center',
+  title: {
+    marginBottom: '12px'
   },
 }));
 
-export default function HistoryList() {
+export default function TestHistoryList() {
   let [history, setHistory] = useState([]);
   let { classes } = useStyles();
 
@@ -41,15 +41,34 @@ export default function HistoryList() {
 
   if (history.length <= 0) {
     return (
-      <Container>
-        <Text align="center" color="#606060" size="xs">Empty history</Text>
-      </Container>
+      <>
+        <Title order={2}>Test History</Title>
+        <Text color="#606060" size="xs">Empty history</Text>
+      </>
     );
   }
 
   return (
     <main>
-
+      <Title className={classes.title} order={2}>Test History</Title>
+      <Table>
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          {history.map(record => {
+            return (
+              <tr key={crypto.randomUUID()}>
+                <td>{record.time_tested}</td>
+                <td>{record.is_positive ? 'True' : 'False'}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
     </main>
   );
 }

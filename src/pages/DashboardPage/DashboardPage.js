@@ -1,13 +1,14 @@
-import { Button, Container, createStyles, Modal, Title, Text } from '@mantine/core';
+import { Button, Container, createStyles, Title, Text } from '@mantine/core';
 import { Navigate } from 'react-router-dom';
 import { Plus } from 'tabler-icons-react';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 
 import Header from '../../components/Header/Header';
-import HistoryList from '../../components/HistoryList/HistoryList';
 import NewLocationModal from '../../components/NewLocationModal/NewLocationModal';
 import ReportExposureModal from '../../components/ReportExposureModal/ReportExposureModal';
+import TestHistoryList from '../../components/TestHistoryList/TestHistoryList';
+import VisitHistoryList from '../../components/VisitHistoryList/VisitHistoryList';
 
 const useStyles = createStyles(theme => ({
   addButton: {
@@ -64,14 +65,18 @@ export default function DashboardPage() {
 
         <Container className={classes.headerContainer}>
           <div className={classes.description}>
-            <Title order={1}>History</Title>
+            <Title order={1}>Dashboard</Title>
             <Text size="md">If there is no QR code to scan, please <span className={classes.locationModalLink} onClick={() => setOpenLocationModal(true)}>generate</span> one and print it.</Text>
           </div>
           <Button leftIcon={<Plus size={18} />} onClick={() => setOpenExposureModal(true)}>Test Result</Button>
         </Container>
 
         <Container className={classes.historyContainer}>
-          <HistoryList />
+          <TestHistoryList />
+        </Container>
+
+        <Container className={classes.historyContainer}>
+          <VisitHistoryList />
         </Container>
 
         <NewLocationModal openModal={openLocationModal} setOpenModal={setOpenLocationModal} />
