@@ -5,7 +5,8 @@ import { Logout, Qrcode } from 'tabler-icons-react';
 import { showNotification } from '@mantine/notifications';
 import { useBooleanToggle } from '@mantine/hooks';
 import { useDispatch } from 'react-redux'
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
+import * as qs from 'query-string';
 
 import logo from '../../assets/images/logo.png';
 import { setEmail, setPassword, setLoggedIn } from '../../features/userData/userDataSlice';
@@ -109,14 +110,18 @@ export default function Header() {
       method: 'POST'
     });
     let qrCodeData = await qrCodeResponse.json();
-    return qrCodeData.content;
+    return qs.parse(qrCodeData.content.split("?")[1]).checkin_endpoint;
   };
 
-  const checkIn = async (event) => {
+  const checkIn = async (event,checkInEndpoint) => {
     try {
-      event.preventDefault();
-      let endpoint = await getCheckInEndpoint();
-      let checkInResponse = await fetch(`${window.COVID_EXPOSURE_SERVICE_ENDPOINT}${endpoint}`, {
+      if (event) {
+        event.preventDefault();
+      }
+      if (!checkInEndpoint) {
+        checkInEndpoint = await getCheckInEndpoint();
+      }
+      let checkInResponse = await fetch(`${window.COVID_EXPOSURE_SERVICE_ENDPOINT}${checkInEndpoint}`, {
         credentials: 'include',
         method: 'POST'
       });
@@ -146,8 +151,17 @@ export default function Header() {
         title: 'Error',
       });
       console.error(err);
+    } finally {
+      localStorage.removeItem("checkin_endpoint");
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("checkin_endpoint")) {
+      checkIn(null,localStorage.getItem("checkin_endpoint"));
+      localStorage.removeItem("checkin_endpoint");
+    }
+  }, [checkIn]);
 
   return (
     <MantineHeader height={56} mb={120}>

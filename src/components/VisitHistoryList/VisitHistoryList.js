@@ -60,10 +60,10 @@ export default function VisitHistoryList() {
           </tr>
         </thead>
         <tbody>
-          {history.map(({ id, status, time_exposed }) => {
+          {history.map(({ business_id, status, time_exposed }) => {
             return (
               <tr key={crypto.randomUUID()}>
-                <td>{id}</td>
+                <td>{business_id}</td>
                 <td>{status}</td>
                 <td>{time_exposed}</td>
               </tr>

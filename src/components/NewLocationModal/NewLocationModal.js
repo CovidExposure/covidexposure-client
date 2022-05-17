@@ -104,7 +104,7 @@ export default function NewLocationModal({ openModal, setOpenModal }) {
             message: 'Please save the QR code in the new tab',
             title: 'Success',
           });
-          window.open(`http://api.qrserver.com/v1/create-qr-code/?data=${data.content}&size=800x800`, "_blank");
+          window.open(`http://api.qrserver.com/v1/create-qr-code/?data=${window.location.origin}?checkin_endpoint=${data.content}&size=800x800`, "_blank");
         } else {
           showNotification({
             autoClose: 3000,
