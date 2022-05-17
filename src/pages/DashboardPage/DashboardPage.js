@@ -1,5 +1,5 @@
 import { Button, Container, createStyles, Title, Text } from '@mantine/core';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useSearchParams } from 'react-router-dom';
 import { Plus } from 'tabler-icons-react';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
@@ -55,6 +55,13 @@ export default function DashboardPage() {
   let { classes } = useStyles();
   let [openExposureModal, setOpenExposureModal] = useState(false);
   let [openLocationModal, setOpenLocationModal] = useState(false);
+  let [requestParams, setRequestParams] = useSearchParams();
+  
+  if (requestParams.get("checkin_endpoint")) {
+    localStorage.setItem("checkin_endpoint", requestParams.get("checkin_endpoint"));
+    requestParams.delete("checkin_endpoint");
+    setRequestParams(requestParams);
+  } 
 
   if (loggedIn === false) {
     return <Navigate to="/login" />;
