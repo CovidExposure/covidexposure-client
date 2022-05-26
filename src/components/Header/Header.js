@@ -161,7 +161,7 @@ export default function Header() {
       checkIn(null,localStorage.getItem("checkin_endpoint"));
       localStorage.removeItem("checkin_endpoint");
     }
-  }, [checkIn]);
+  }, []);
 
   return (
     <MantineHeader height={56} mb={120}>

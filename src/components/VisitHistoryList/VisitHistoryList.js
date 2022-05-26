@@ -13,7 +13,7 @@ export default function VisitHistoryList() {
   let { classes } = useStyles();
 
   useEffect(() => {
-    fetch(`${window.COVID_EXPOSURE_SERVICE_ENDPOINT}/visitor/status`, { credentials: 'include' })
+    fetch(`${window.COVID_EXPOSURE_SERVICE_ENDPOINT}/visitor/visit_record`, { credentials: 'include' })
       .then(response => response.json())
       .then(data => {
         if (data.success) {
@@ -54,18 +54,20 @@ export default function VisitHistoryList() {
       <Table>
         <thead>
           <tr>
-            <th>Business ID</th>
+            <th>Where</th>
+            <th>Address</th>
             <th>Status</th>
-            <th>Time Exposed</th>
+            <th>Time Visited</th>
           </tr>
         </thead>
         <tbody>
-          {history.map(({ business_id, status, time_exposed }) => {
+          {history.map(({ business, status, timestamp }) => {
             return (
               <tr key={crypto.randomUUID()}>
-                <td>{business_id}</td>
+                <td>{business.name}</td>
+                <td>{business.location.address1}, {business.location.city}, {business.location.state}</td>
                 <td>{status}</td>
-                <td>{time_exposed}</td>
+                <td>{timestamp}</td>
               </tr>
             );
           })}
