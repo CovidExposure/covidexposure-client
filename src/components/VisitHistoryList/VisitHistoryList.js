@@ -13,7 +13,7 @@ export default function VisitHistoryList() {
   let { classes } = useStyles();
 
   useEffect(() => {
-    fetch(`${window.COVID_EXPOSURE_SERVICE_ENDPOINT}/visitor/visit_record`, { credentials: 'include' })
+    fetch(`${window.COVID_EXPOSURE_SERVICE_ENDPOINT}/visitor/visit_records`, { credentials: 'include' })
       .then(response => response.json())
       .then(data => {
         if (data.success) {
